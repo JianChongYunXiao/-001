@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>10-31</title>
+</head>
+
+<body>
+    <script>
+        // 第一题   知识点：原型，原型链
+        // function Fn() {
+        //     this.x = 100;
+        //     this.y = 200;
+        //     // this.getX = function () {
+        //     //     console.log(this.x);
+        //     // }
+        // }
+        // Fn.prototype.getX = function () {
+
+        //     console.log(this.x);         
+        // };
+        // Fn.prototype.getY = function () {
+        //     console.log(this.y);
+        // };
+
+        // var f1 = new Fn;
+        // var f2 = new Fn;
+        
+       
+        // console.log(f1.getX === f2.getX);  // false  不相等 是因为他们用的各自地址中的get X
+        // console.log(f1.getY === f2.getY);   // true 相等是因为他们的getY 是调用组成实例化对象的构造函数的原型里面的getY，
+        // console.log(f1.__proto__.getY === Fn.prototype.getY);  // true   函数的原型就等于实例化的原型链
+        // console.log(f1.getY)  // =>  此处找这个fetY的顺序是  先看实例化本身有没有 => 实例化对象的原型链有没有  => 组成实例化对象的构造函数的原型有没有。
+        // console.log(f1.__proto__.getX === f2.getX);  //false  因为前者是实例化对象的原型链里面的内容，后者是实例化对象的函数内部的东西
+        // console.log(f1.getX()); // 100 undefing   前面的100是函数内执行的输出，因为函数没有return 所以输出值为undefined。
+        // console.log(f1.getX === Fn.prototype.getX);  // false
+        // console.log(f1.constructor); // Fn(){}
+        // console.log(Fn.prototype.__proto__.constructor);  // Obj
+        // console.log(Fn.prototype.__proto__)  //  此处有疑问。   和上一题一块考虑，在这个位置能否打印出上一级
+        // f1.getX();  // 100
+        // f1.__proto__.getX();  // undefined    此题中找的这个getX前面有点 => 就是说有主 f1._proto_ 它等于Fn 的原型。所以此处主为Fn.prototype,主里面没有X 所以输出undefined
+        // Fn.prototype.getY()
+        // f2.getY();            // undefined
+        // Fn.prototype.getY();  // undefined
+
+
+        // 第二题   知识点： this  在什么情况下代表什么  原型
+
+        // function Foo() {
+        //     getName = function () {   // 此处为全局变量，在运行代码变量提升的时候，
+        //         console.log(1);       // 此处函数表达式提到代码的最前面，所以Foo里面就没有了这个函数表达式
+        //     };                        // 在Foo 里面找不到getName了
+            
+        //     return this;  
+        // }
+        
+        // Foo.getName = function () {       // 此处不能更改函数 Fn 里面的属性值。
+        //     console.log(2);
+        // };
+        // Foo.prototype.getName = function () {
+        //     console.log(3);
+        // };
+
+        // var getName = function () {
+        //     console.log(4);
+        // };
+        // function getName() {
+        //     console.log(5);
+        // } 
+        
+        //  Foo.getName();  // 2
+        // getName();  // 4
+
+        // Foo().getName();  // 1    第二阵营的不能改变函数中的属性值。
+
+        // getName();  // 4   //  变量提升后，函数提到最上面去，变量赋值在下面，所以是赋值后的值。
+
+        // new Foo.getName();   // 2 此处是打印2的值得函数
+
+        // new Foo().getName();   // 3 Foo 中this代表window  此处去找Foo的原型
+       
+        // new new Foo().getName();  //  3  解析参考 53、54、55行
+
+
+
+        // // 第三题  
+
+        // let m = 20;
+        // let Fn = function (n, m) {
+        //     this.n = n;
+        //     this.aa = function () {
+        //         console.log(this.n + (++m));
+        //     }
+        // };
+        // Fn.prototype.bb = function () {
+        //     console.log(this.n + m); //10+20
+        // };
+
+        // Fn.prototype.constructor = 10;
+
+
+        // let f1 = new Fn(10, 20);
+        
+        // Fn.prototype = {
+        //     cc: function () {
+        //         console.log(this.n + m);
+        //     }
+        // };
+
+        // let f2 = new Fn(30);
+
+        // console.log(f1.constructor);  // 10
+        // console.log(f2.constructor); //  不明白  和上一题 有何不同  不是找构造函数的原型？
+        // console.log(f1.constructor == f2.constructor);   // false
+
+        // f1.aa();   // 31
+        // f1.bb();  // 30
+        // f1.cc();  // 报错
+        // f2.bb();  // 报错
+        // f2.cc();  // 50   f2 里面传的参 是n = 30  开头定义了 m= 20  所以会= 50 
+        // f2.__proto__.cc();  // nan
+        
+    </script>
+
+</body>
+
+</html>
